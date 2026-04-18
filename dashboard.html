@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safe Nest - Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --primary: #0f766e;
+      --primary-strong: #0b5f59;
+      --secondary: #0ea5a2;
+      --accent: #f59e0b;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #dbe4ed;
+      --danger: #dc2626;
+      --shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 14%, rgba(14, 165, 162, 0.15), transparent 38%),
+        radial-gradient(circle at 88% 86%, rgba(245, 158, 11, 0.14), transparent 30%),
+        var(--bg);
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 22px auto 40px;
+    }
+
+    .top-nav {
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 14px;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      animation: fadeDown 0.45s ease;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--primary-strong);
+      font-size: 18px;
+      letter-spacing: -0.2px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(140deg, var(--primary), var(--secondary));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-strong);
+      background: #ecfbfa;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .emergency-btn {
+      border: none;
+      background: linear-gradient(120deg, #ef4444, #dc2626);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 9px 14px;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(220, 38, 38, 0.25);
+      white-space: nowrap;
+    }
+
+    .profile {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: grid;
+      place-items: center;
+      background: #fff;
+      color: var(--primary-strong);
+      font-size: 16px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .profile:hover {
+      border-color: var(--primary);
+    }
+
+    .main-section {
+      margin-top: 22px;
+      display: grid;
+      gap: 22px;
+      animation: riseUp 0.45s ease;
+    }
+
+    .location-panel {
+      background: var(--surface);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .location-panel h1 {
+      font-size: 28px;
+      color: var(--primary-strong);
+      line-height: 1.2;
+      letter-spacing: -0.4px;
+    }
+
+    .location-panel p {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .location-form {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      align-items: end;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .field select,
+    .field input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 11px 12px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: 0.2s ease;
+      background: #fff;
+    }
+
+    .field select:focus,
+    .field input:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(14, 165, 162, 0.14);
+    }
+
+    .check-btn {
+      border: none;
+      border-radius: 11px;
+      background: linear-gradient(120deg, var(--primary), var(--secondary));
+      color: #fff;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+      letter-spacing: 0.2px;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.28);
+    }
+
+    .error-msg {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--danger);
+      min-height: 18px;
+      font-weight: 500;
+    }
+
+    .quick-access {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .quick-card {
+      background: var(--surface);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 14px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      padding: 14px;
+      cursor: pointer;
+      display: grid;
+      gap: 8px;
+      min-height: 110px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-align: left;
+      font-family: inherit;
+      border: 1px solid var(--border);
+    }
+
+    .quick-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.14);
+    }
+
+    .quick-card .icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #e7fbfa;
+      color: var(--primary-strong);
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .quick-card h3 {
+      font-size: 14px;
+      line-height: 1.3;
+      color: #102034;
+    }
+
+    .quick-card p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 980px) {
+      .location-form {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .quick-access {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-nav {
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+      }
+
+      .location-form {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-access {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes riseUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="top-nav">
+      <div class="logo">
+        <span class="logo-mark">SN</span>
+        <span>Safe Nest</span>
+      </div>
+
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Safety Map</a>
+        <a href="#">Emergency</a>
+        <a href="#">Settings</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="emergency-btn" type="button" onclick="window.location.href='tel:112'">Emergency</button>
+        <button class="profile" type="button" title="Profile">&#128100;</button>
+      </div>
+    </nav>
+
+    <main class="main-section">
+      <section class="location-panel">
+        <h1>Dashboard / Location Input</h1>
+        <p>Enter your location details to continue to safety analysis.</p>
+
+        <form class="location-form" id="locationForm" novalidate>
+          <div class="field">
+            <label for="state">State</label>
+            <select id="state">
+              <option value="">Select State</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="city">City</label>
+            <select id="city">
+              <option value="">Select City</option>
+              <option value="New Delhi">New Delhi</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Bengaluru">Bengaluru</option>
+              <option value="Lucknow">Lucknow</option>
+              <option value="Chennai">Chennai</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="area">Area / Locality</label>
+            <input id="area" type="text" placeholder="e.g., Kashmere Gate" />
+          </div>
+
+          <button class="check-btn" type="submit">Check Safety</button>
+        </form>
+
+        <p class="error-msg" id="formError"></p>
+      </section>
+
+      <section class="quick-access" aria-label="Quick access">
+        <button class="quick-card" type="button" id="viewSafetyMapBtn">
+          <span class="icon">&#128506;</span>
+          <h3>View Safety Map</h3>
+          <p>See map-based safety indicators.</p>
+        </button>
+
+        <button class="quick-card" type="button" id="womenFriendlyBtn">
+          <span class="icon">&#127970;</span>
+          <h3>Women-Friendly Places</h3>
+          <p>Find nearby trusted places.</p>
+        </button>
+
+        <button class="quick-card" type="button" id="emergencyContactsBtn">
+          <span class="icon">&#128222;</span>
+          <h3>Emergency Contacts</h3>
+          <p>Quickly reach emergency services.</p>
+        </button>
+
+        <button class="quick-card" type="button" id="reportUnsafeBtn">
+          <span class="icon">&#9888;</span>
+          <h3>Report Unsafe Area</h3>
+          <p>Report issues to improve safety.</p>
+        </button>
+
+        <button class="quick-card" type="button" id="liveAlertsBtn">
+          <span class="icon">&#128276;</span>
+          <h3>Live Alerts</h3>
+          <p>Get real-time area alerts.</p>
+        </button>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const locationForm = document.getElementById('locationForm');
+    const stateInput = document.getElementById('state');
+    const cityInput = document.getElementById('city');
+    const areaInput = document.getElementById('area');
+    const formError = document.getElementById('formError');
+
+    function saveLocationAndGoToMap() {
+      const state = stateInput.value.trim();
+      const city = cityInput.value.trim();
+      const area = areaInput.value.trim();
+
+      if (!state || !city || !area) {
+        formError.textContent = 'Please fill State, City, and Area / Locality.';
+        return;
+      }
+
+      const selectedLocation = {
+        state: state,
+        city: city,
+        area: area,
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('safeNestSelectedLocation', JSON.stringify(selectedLocation));
+      formError.textContent = '';
+      window.location.href = 'map.html';
+    }
+
+    locationForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      saveLocationAndGoToMap();
+    });
+
+    document.getElementById('viewSafetyMapBtn').addEventListener('click', function () {
+      saveLocationAndGoToMap();
+    });
+
+    document.getElementById('womenFriendlyBtn').addEventListener('click', function () {
+      const state = stateInput.value.trim();
+      const city = cityInput.value.trim();
+      const area = areaInput.value.trim();
+
+      if (!state || !city || !area) {
+        formError.textContent = 'Please fill State, City, and Area / Locality first.';
+        return;
+      }
+
+      const selectedLocation = {
+        state: state,
+        city: city,
+        area: area,
+        savedAt: new Date().toISOString(),
+        focus: 'women-friendly'
+      };
+
+      localStorage.setItem('safeNestSelectedLocation', JSON.stringify(selectedLocation));
+      window.location.href = 'map.html?focus=women-friendly';
+    });
+
+    document.getElementById('emergencyContactsBtn').addEventListener('click', function () {
+      window.location.href = 'tel:112';
+    });
+
+    document.getElementById('reportUnsafeBtn').addEventListener('click', function () {
+      const subject = encodeURIComponent('Unsafe area report - Safe Nest');
+      const body = encodeURIComponent('Location details:\nState: ' + stateInput.value.trim() + '\nCity: ' + cityInput.value.trim() + '\nArea: ' + areaInput.value.trim());
+      window.location.href = 'mailto:safenest@example.com?subject=' + subject + '&body=' + body;
+    });
+
+    document.getElementById('liveAlertsBtn').addEventListener('click', function () {
+      const state = stateInput.value.trim();
+      const city = cityInput.value.trim();
+      const area = areaInput.value.trim();
+
+      if (state && city && area) {
+        const selectedLocation = {
+          state: state,
+          city: city,
+          area: area,
+          savedAt: new Date().toISOString(),
+          focus: 'alerts'
+        };
+
+        localStorage.setItem('safeNestSelectedLocation', JSON.stringify(selectedLocation));
+        window.location.href = 'map.html?focus=alerts';
+        return;
+      }
+
+      window.location.href = 'map.html';
+    });
+  </script>
+</body>
+</html>
