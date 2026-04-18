@@ -66,18 +66,15 @@ document.getElementById('liveAlertsBtn').addEventListener('click', function () {
   const area = areaInput.value.trim();
 
   if (state && city && area) {
-    const selectedLocation = {
+    localStorage.setItem('safeNestSelectedLocation', JSON.stringify({
       state: state,
       city: city,
       area: area,
-      savedAt: new Date().toISOString(),
-      focus: 'alerts'
-    };
-
-    localStorage.setItem('safeNestSelectedLocation', JSON.stringify(selectedLocation));
-    window.location.href = 'map.html?focus=alerts';
+      savedAt: new Date().toISOString()
+    }));
+    window.location.href = 'alerts.html';
     return;
   }
 
-  window.location.href = 'map.html';
+  window.location.href = 'alerts.html';
 });

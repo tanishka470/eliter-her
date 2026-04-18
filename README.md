@@ -21,12 +21,21 @@ This project is built using plain HTML, CSS, and JavaScript, with Leaflet for ma
   - Safety indicator breakdown
   - Score and rating system
   - Optional unsafe-report markers from local reports
+  - Reported Issues side panel with recent local reports
+  - Click a report in panel to jump to its map marker
 - Report Unsafe Area page with:
   - Auto-filled location (editable manually)
   - Issue-type selection
   - Description input
   - Optional image upload
   - Local report storage in browser
+- Live Alerts page with:
+  - Dataset-driven recent safety alerts
+  - Time-based filtering
+  - Location-based filtering
+  - Severity chips (Low / Medium / High)
+  - Severity legend for quick scanning
+  - Quick jump to map alerts focus
 - Women-Friendly Places page with:
   - Category filters
   - Search
@@ -35,14 +44,13 @@ This project is built using plain HTML, CSS, and JavaScript, with Leaflet for ma
 
 ## Page Flow
 
-1. User starts at Login/Signup page
-2. After login, user goes to Dashboard
-3. User enters location and checks safety
-4. User can open:
-   - Safety Map
-  - Report Unsafe Area
-   - Women-Friendly Places
-   - Emergency and report actions
+1. User logs in from Login/Signup page.
+2. User enters location in Dashboard.
+3. User views Safety Map and indicator data.
+4. User can explore Women-Friendly Places.
+5. User can report unsafe issues from Report Unsafe Area page.
+6. User can view Live Alerts and filter by time/location.
+7. User can use Emergency actions at any time.
 
 ## Tech Stack
 
@@ -59,6 +67,7 @@ This project is built using plain HTML, CSS, and JavaScript, with Leaflet for ma
 |-- dashboard.html
 |-- map.html
 |-- report.html
+|-- alerts.html
 |-- places.html
 |-- README.md
 |-- css/
@@ -66,12 +75,14 @@ This project is built using plain HTML, CSS, and JavaScript, with Leaflet for ma
 |   |-- dashboard.css
 |   |-- map.css
 |   |-- report.css
+|   |-- alerts.css
 |   |-- places.css
 |-- js/
 |   |-- index.js
 |   |-- dashboard.js
 |   |-- map.js
 |   |-- report.js
+|   |-- alerts.js
 |   |-- places.js
 
 ## How To Run
@@ -92,6 +103,8 @@ The app stores selected data in localStorage, including:
 - Selected location details
 - Place reviews and ratings
 - Unsafe area reports (with optional image data URL)
+
+Live alerts are loaded from an in-page dataset and merged with local unsafe reports.
 
 If needed, clear browser localStorage to reset app data.
 
