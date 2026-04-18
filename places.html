@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safe Nest - Women-Friendly Places</title>
+  <link rel="stylesheet" href="css/places.css" /></head>
+<body>
+  <header class="top-bar">
+    <button class="back-btn" type="button" id="backBtn">Back</button>
+    <h1 class="page-title">Women-Friendly Places</h1>
+    <button class="emergency-btn" type="button" id="emergencyBtn">Emergency</button>
+  </header>
+
+  <div class="container">
+    <div class="search-filter-row">
+      <div class="search-box">
+        <span class="search-icon">ðŸ”</span>
+        <input id="searchInput" type="text" placeholder="Search places by name..." />
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Category:</span>
+        <div class="filter-chips">
+          <button class="chip active" data-category="all">All</button>
+          <button class="chip" data-category="clothing">Clothing Stores</button>
+          <button class="chip" data-category="cafes">Cafes</button>
+          <button class="chip" data-category="gyms">Gyms</button>
+          <button class="chip" data-category="hospitals">Hospitals</button>
+          <button class="chip" data-category="hostels">Hostels</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="places-grid" id="placesGrid"></section>
+  </div>
+
+  <div class="modal" id="reviewModal">
+    <div class="modal-content">
+      <div class="modal-head">
+        <h2 class="modal-title" id="modalPlaceName">Add Review</h2>
+        <button class="close-btn" type="button" id="closeModalBtn">&times;</button>
+      </div>
+
+      <form id="reviewForm" novalidate>
+        <div class="field">
+          <label>Rating</label>
+          <div class="star-picker" id="starPicker"></div>
+        </div>
+
+        <div class="field">
+          <label for="reviewComment">Your Review</label>
+          <textarea id="reviewComment" placeholder="Share your experience..."></textarea>
+        </div>
+
+        <button class="submit-review-btn" type="submit">Submit Review</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/places.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safe Nest - Emergency</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --primary: #0f766e;
+      --primary-strong: #0b5f59;
+      --secondary: #0ea5a2;
+      --accent: #f59e0b;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #dbe4ed;
+      --danger: #dc2626;
+      --danger-soft: #fef2f2;
+      --danger-border: #fecaca;
+      --success: #059669;
+      --shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 14%, rgba(14,165,162,0.15), transparent 38%),
+        radial-gradient(circle at 88% 86%, rgba(245,158,11,0.14), transparent 30%),
+        var(--bg);
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 22px auto 48px;
+    }
+
+    /* ── TOP NAV ── */
+    .top-nav {
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 14px;
+      box-shadow: 0 14px 30px rgba(15,23,42,0.1);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      animation: fadeDown 0.45s ease;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--primary-strong);
+      font-size: 18px;
+      letter-spacing: -0.2px;
+    }
+
+    .logo-mark {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(140deg, var(--primary), var(--secondary));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary-strong);
+      background: #ecfbfa;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .profile {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: grid;
+      place-items: center;
+      background: #fff;
+      color: var(--primary-strong);
+      font-size: 16px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .profile:hover { border-color: var(--primary); }
+
+    /* ── PAGE BODY ── */
+    .page-body {
+      margin-top: 24px;
+      display: grid;
+      gap: 22px;
+      animation: riseUp 0.45s ease;
+    }
+
+    /* ── SOS SECTION ── */
+    .sos-section {
+      background: linear-gradient(135deg, #fff1f2, #ffffff);
+      border: 1px solid var(--danger-border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      text-align: center;
+    }
+
+    .sos-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--danger);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .sos-ring {
+      position: relative;
+      width: 150px; height: 150px;
+      display: grid;
+      place-items: center;
+    }
+
+    .sos-ring::before,
+    .sos-ring::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid rgba(220,38,38,0.3);
+      animation: pulse-ring 2s ease-out infinite;
+    }
+
+    .sos-ring::before { width: 130px; height: 130px; animation-delay: 0s; }
+    .sos-ring::after  { width: 150px; height: 150px; animation-delay: 0.6s; }
+
+    .sos-btn {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(140deg, #ef4444, #dc2626);
+      color: #fff;
+      font-family: inherit;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 14px 36px rgba(220,38,38,0.45);
+      position: relative;
+      z-index: 2;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .sos-btn:hover  { transform: scale(1.05); box-shadow: 0 18px 44px rgba(220,38,38,0.5); }
+    .sos-btn:active { transform: scale(0.96); }
+    .sos-btn .sos-icon { font-size: 26px; line-height: 1; }
+
+    .sos-desc {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.6;
+    }
+
+    /* ── SOS ACTION PANEL ── */
+    .sos-actions {
+      display: none;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      animation: riseUp 0.3s ease;
+    }
+
+    .sos-actions.visible { display: flex; }
+
+    .sos-action-btn {
+      border: 1.5px solid var(--danger-border);
+      background: #fff;
+      color: var(--danger);
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .sos-action-btn:hover {
+      background: var(--danger);
+      color: #fff;
+      border-color: var(--danger);
+    }
+
+    /* ── TWO-COLUMN ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(15,23,42,0.06);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-strong);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .icon {
+      width: 32px; height: 32px;
+      border-radius: 9px;
+      background: #e7fbfa;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+    }
+
+    /* ── CONTACT ROWS ── */
+    .contact-list { display: grid; gap: 9px; }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 11px 14px;
+      background: #f9fcfd;
+      transition: 0.2s ease;
+    }
+
+    .contact-row:hover { background: #ecfbfa; border-color: rgba(15,118,110,0.2); }
+
+    .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .contact-emoji { font-size: 20px; flex-shrink: 0; }
+
+    .contact-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .contact-number {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .call-btn {
+      border: none;
+      background: linear-gradient(120deg, var(--primary), var(--secondary));
+      color: #fff;
+      border-radius: 9px;
+      padding: 8px 14px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: 0.2s ease;
+      flex-shrink: 0;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .call-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(15,118,110,0.3); }
+
+    /* ── ADD CONTACT FORM ── */
+    .add-contact-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 9px;
+      align-items: end;
+    }
+
+    .field { display: grid; gap: 5px; }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .field input {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: 0.2s ease;
+      background: #fff;
+    }
+
+    .field input:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(14,165,162,0.14);
+    }
+
+    .add-btn {
+      border: none;
+      background: linear-gradient(120deg, var(--primary), var(--secondary));
+      color: #fff;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: 0.2s ease;
+      height: 42px;
+    }
+
+    .add-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(15,118,110,0.28); }
+
+    .form-error {
+      font-size: 12px;
+      color: var(--danger);
+      min-height: 16px;
+      font-weight: 500;
+    }
+
+    /* ── PERSONAL CONTACTS LIST ── */
+    .personal-list { display: grid; gap: 9px; }
+
+    .personal-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 11px 14px;
+      background: #f9fcfd;
+      transition: 0.2s ease;
+      animation: riseUp 0.3s ease;
+    }
+
+    .personal-item:hover { background: #ecfbfa; }
+
+    .personal-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+    .icon-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      text-decoration: none;
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .icon-btn.call-icon { color: var(--primary-strong); }
+    .icon-btn.del-icon  { color: var(--danger); }
+
+    .icon-btn:hover            { background: #ecfbfa; border-color: var(--primary); }
+    .icon-btn.del-icon:hover   { background: #fef2f2; border-color: var(--danger); }
+
+    .empty-note {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      padding: 12px 0;
+    }
+
+    /* ── UTILITY BUTTONS ── */
+    .util-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .util-btn {
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 18px 20px;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-align: left;
+      transition: 0.2s ease;
+      box-shadow: 0 8px 20px rgba(15,23,42,0.07);
+    }
+
+    .util-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(15,23,42,0.12);
+      border-color: var(--primary);
+    }
+
+    .util-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .util-icon.teal  { background: #e7fbfa; }
+    .util-icon.amber { background: #fef3c7; }
+
+    .util-text h3 { font-size: 14px; font-weight: 700; color: #1e293b; }
+    .util-text p  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .alarm-active {
+      background: #fef3c7 !important;
+      border-color: var(--accent) !important;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1e293b;
+      color: #fff;
+      border-radius: 12px;
+      padding: 12px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 12px 28px rgba(15,23,42,0.3);
+      z-index: 999;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      opacity: 0;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes riseUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse-ring {
+      0%   { transform: scale(0.85); opacity: 0.8; }
+      70%  { transform: scale(1);    opacity: 0; }
+      100% { transform: scale(1);    opacity: 0; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .top-nav { flex-wrap: wrap; }
+      .nav-links { order: 3; width: 100%; }
+      .add-contact-form { grid-template-columns: 1fr; }
+      .util-row { grid-template-columns: 1fr; }
+      .sos-actions { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- NAV -->
+    <nav class="top-nav">
+      <div class="logo">
+        <span class="logo-mark">SN</span>
+        <span>Safe Nest</span>
+      </div>
+      <div class="nav-links">
+        <a href="dashboard.html">Home</a>
+        <a href="map.html">Safety Map</a>
+        <a href="emergency.html" class="active">Emergency</a>
+        <a href="#">Settings</a>
+      </div>
+      <div class="nav-actions">
+        <button class="profile" type="button" title="Profile">&#128100;</button>
+      </div>
+    </nav>
+
+    <!-- PAGE BODY -->
+    <div class="page-body">
+
+      <!-- SOS -->
+      <section class="sos-section">
+        <p class="sos-label">&#9889; Emergency Help</p>
+
+        <div class="sos-ring">
+          <button class="sos-btn" id="sosBtn" type="button">
+            <span class="sos-icon">&#128530;</span>
+            SOS
+          </button>
+        </div>
+
+        <p class="sos-desc">
+          Press the SOS button to instantly access emergency call options and send alerts to your personal contacts.
+        </p>
+
+        <div class="sos-actions" id="sosActions">
+          <button class="sos-action-btn" onclick="window.location.href='tel:112'">&#128222; Call 112 (Emergency)</button>
+          <button class="sos-action-btn" onclick="window.location.href='tel:100'">&#128110; Call Police (100)</button>
+          <button class="sos-action-btn" id="sosShareLocation">&#128205; Share My Location</button>
+          <button class="sos-action-btn" id="sosSendAlert">&#128276; Alert My Contacts</button>
+        </div>
+      </section>
+
+      <!-- TWO-COL: HELPLINES + PERSONAL CONTACTS -->
+      <div class="two-col">
+
+        <!-- NATIONAL HELPLINES -->
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">&#128680;</span>
+            National Emergency Helplines
+          </div>
+          <div class="contact-list">
+            <div class="contact-row">
+              <div class="contact-info">
+                <span class="contact-emoji">&#128110;</span>
+                <div>
+                  <div class="contact-name">Police</div>
+                  <div class="contact-number">100</div>
+                </div>
+              </div>
+              <a class="call-btn" href="tel:100">Call</a>
+            </div>
+            <div class="contact-row">
+              <div class="contact-info">
+                <span class="contact-emoji">&#128293;</span>
+                <div>
+                  <div class="contact-name">Fire Services</div>
+                  <div class="contact-number">101</div>
+                </div>
+              </div>
+              <a class="call-btn" href="tel:101">Call</a>
+            </div>
+            <div class="contact-row">
+              <div class="contact-info">
+                <span class="contact-emoji">&#128657;</span>
+                <div>
+                  <div class="contact-name">Ambulance</div>
+                  <div class="contact-number">102</div>
+                </div>
+              </div>
+              <a class="call-btn" href="tel:102">Call</a>
+            </div>
+            <div class="contact-row">
+              <div class="contact-info">
+                <span class="contact-emoji">&#128105;</span>
+                <div>
+                  <div class="contact-name">Women Helpline</div>
+                  <div class="contact-number">1091</div>
+                </div>
+              </div>
+              <a class="call-btn" href="tel:1091">Call</a>
+            </div>
+            <div class="contact-row">
+              <div class="contact-info">
+                <span class="contact-emoji">&#128102;</span>
+                <div>
+                  <div class="contact-name">Child Helpline</div>
+                  <div class="contact-number">1098</div>
+                </div>
+              </div>
+              <a class="call-btn" href="tel:1098">Call</a>
+            </div>
+            <div class="contact-row">
+              <div class="contact-info">
+                <span class="contact-emoji">&#127758;</span>
+                <div>
+                  <div class="contact-name">Unified Emergency</div>
+                  <div class="contact-number">112</div>
+                </div>
+              </div>
+              <a class="call-btn" href="tel:112">Call</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERSONAL CONTACTS -->
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">&#128101;</span>
+            Personal Emergency Contacts
+          </div>
+
+          <div class="add-contact-form">
+            <div class="field">
+              <label for="pName">Name</label>
+              <input id="pName" type="text" placeholder="Contact name" />
+            </div>
+            <div class="field">
+              <label for="pPhone">Phone</label>
+              <input id="pPhone" type="tel" placeholder="10-digit number" />
+            </div>
+            <button class="add-btn" id="addContactBtn" type="button">+ Add</button>
+          </div>
+          <p class="form-error" id="contactError"></p>
+
+          <div class="personal-list" id="personalList">
+            <p class="empty-note" id="emptyNote">No personal contacts added yet.</p>
+          </div>
+        </div>
+
+      </div><!-- /two-col -->
+
+      <!-- UTILITIES -->
+      <div class="util-row">
+
+        <button class="util-btn" id="shareLocationBtn" type="button">
+          <span class="util-icon teal">&#128205;</span>
+          <div class="util-text">
+            <h3>Share Live Location</h3>
+            <p>Copy a Google Maps link with your current coordinates.</p>
+          </div>
+        </button>
+
+        <button class="util-btn" id="alarmBtn" type="button">
+          <span class="util-icon amber">&#128276;</span>
+          <div class="util-text">
+            <h3>Trigger Alarm Sound</h3>
+            <p>Play a loud alarm to draw attention in unsafe situations.</p>
+          </div>
+        </button>
+
+      </div>
+
+    </div><!-- /page-body -->
+  </div><!-- /container -->
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ── TOAST ── */
+    function showToast(msg, duration) {
+      duration = duration || 2800;
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function () { t.classList.remove('show'); }, duration);
+    }
+
+    /* ── SOS TOGGLE ── */
+    var sosBtn     = document.getElementById('sosBtn');
+    var sosActions = document.getElementById('sosActions');
+    var sosOpen    = false;
+
+    sosBtn.addEventListener('click', function () {
+      sosOpen = !sosOpen;
+      sosActions.classList.toggle('visible', sosOpen);
+      sosBtn.style.background = sosOpen
+        ? 'linear-gradient(140deg,#b91c1c,#991b1b)'
+        : 'linear-gradient(140deg,#ef4444,#dc2626)';
+    });
+
+    /* ── SOS → SHARE LOCATION ── */
+    document.getElementById('sosShareLocation').addEventListener('click', function () {
+      handleShareLocation();
+    });
+
+    /* ── SOS → ALERT CONTACTS ── */
+    document.getElementById('sosSendAlert').addEventListener('click', function () {
+      var contacts = getPersonalContacts();
+      if (contacts.length === 0) {
+        showToast('No personal contacts saved. Add them below first.');
+        return;
+      }
+      var names = contacts.map(function (c) { return c.name; }).join(', ');
+      showToast('Alert sent to: ' + names, 3500);
+    });
+
+    /* ── PERSONAL CONTACTS ── */
+    function getPersonalContacts() {
+      var raw = localStorage.getItem('safeNestEmergencyContacts');
+      return raw ? JSON.parse(raw) : [];
+    }
+
+    function savePersonalContacts(list) {
+      localStorage.setItem('safeNestEmergencyContacts', JSON.stringify(list));
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderPersonalContacts() {
+      var list     = document.getElementById('personalList');
+      var emptyEl  = document.getElementById('emptyNote');
+      var contacts = getPersonalContacts();
+
+      list.querySelectorAll('.personal-item').forEach(function (el) { el.remove(); });
+
+      if (contacts.length === 0) {
+        emptyEl.style.display = '';
+        return;
+      }
+      emptyEl.style.display = 'none';
+
+      contacts.forEach(function (contact, index) {
+        var item = document.createElement('div');
+        item.className = 'personal-item';
+        item.innerHTML =
+          '<div class="contact-info">' +
+            '<span class="contact-emoji">&#128100;</span>' +
+            '<div>' +
+              '<div class="contact-name">' + escapeHtml(contact.name) + '</div>' +
+              '<div class="contact-number">' + escapeHtml(contact.phone) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="personal-actions">' +
+            '<a class="icon-btn call-icon" href="tel:' + escapeHtml(contact.phone) + '" title="Call">&#128222;</a>' +
+            '<button class="icon-btn del-icon" data-index="' + index + '" title="Delete">&#128465;</button>' +
+          '</div>';
+        list.appendChild(item);
+      });
+
+      list.querySelectorAll('.del-icon').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var idx = parseInt(btn.getAttribute('data-index'), 10);
+          var c = getPersonalContacts();
+          c.splice(idx, 1);
+          savePersonalContacts(c);
+          renderPersonalContacts();
+          showToast('Contact removed.');
+        });
+      });
+    }
+
+    document.getElementById('addContactBtn').addEventListener('click', function () {
+      var nameInput  = document.getElementById('pName');
+      var phoneInput = document.getElementById('pPhone');
+      var errorEl    = document.getElementById('contactError');
+      var name  = nameInput.value.trim();
+      var phone = phoneInput.value.trim();
+
+      if (!name || name.length < 2) {
+        errorEl.textContent = 'Name must be at least 2 characters.';
+        return;
+      }
+      if (!/^\d{10}$/.test(phone)) {
+        errorEl.textContent = 'Phone must be exactly 10 digits.';
+        return;
+      }
+
+      errorEl.textContent = '';
+      var contacts = getPersonalContacts();
+      contacts.push({ name: name, phone: phone });
+      savePersonalContacts(contacts);
+      nameInput.value  = '';
+      phoneInput.value = '';
+      renderPersonalContacts();
+      showToast('Contact added successfully!');
+    });
+
+    /* ── SHARE LIVE LOCATION ── */
+    function handleShareLocation() {
+      if (!navigator.geolocation) {
+        showToast('Geolocation is not supported by your browser.');
+        return;
+      }
+      showToast('Fetching your location...', 4000);
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          var lat  = pos.coords.latitude.toFixed(6);
+          var lng  = pos.coords.longitude.toFixed(6);
+          var link = 'https://maps.google.com/?q=' + lat + ',' + lng;
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(link).then(function () {
+              showToast('Location link copied! ' + lat + ', ' + lng, 4500);
+            }).catch(function () {
+              prompt('Copy this location link:', link);
+            });
+          } else {
+            prompt('Copy this location link:', link);
+          }
+        },
+        function () {
+          showToast('Location access denied. Please allow in browser settings.');
+        }
+      );
+    }
+
+    document.getElementById('shareLocationBtn').addEventListener('click', handleShareLocation);
+
+    /* ── ALARM ── */
+    var alarmInterval = null;
+    var alarmActive   = false;
+    var alarmBtn      = document.getElementById('alarmBtn');
+
+    function beep(freq, dur) {
+      try {
+        var ctx  = new (window.AudioContext || window.webkitAudioContext)();
+        var osc  = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        gain.gain.value    = 1;
+        osc.frequency.value = freq;
+        osc.type = 'square';
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + dur / 1000);
+        setTimeout(function () { ctx.close(); }, dur + 100);
+      } catch (e) { /* no audio context */ }
+    }
+
+    alarmBtn.addEventListener('click', function () {
+      if (!alarmActive) {
+        alarmActive = true;
+        alarmBtn.classList.add('alarm-active');
+        alarmBtn.querySelector('.util-text h3').textContent = 'Alarm ON — Tap to Stop';
+        beep(880, 300);
+        alarmInterval = setInterval(function () {
+          beep(880, 200);
+          setTimeout(function () { beep(660, 200); }, 250);
+        }, 600);
+        showToast('Alarm activated! Tap again to stop.', 3000);
+      } else {
+        alarmActive = false;
+        clearInterval(alarmInterval);
+        alarmInterval = null;
+        alarmBtn.classList.remove('alarm-active');
+        alarmBtn.querySelector('.util-text h3').textContent = 'Trigger Alarm Sound';
+        showToast('Alarm stopped.', 2000);
+      }
+    });
+
+    /* ── INIT ── */
+    renderPersonalContacts();
+  </script>
+</body>
+</html>
