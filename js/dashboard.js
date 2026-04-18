@@ -3,6 +3,9 @@ const stateInput = document.getElementById('state');
 const cityInput = document.getElementById('city');
 const areaInput = document.getElementById('area');
 const formError = document.getElementById('formError');
+const profileBtn = document.querySelector(".profile");
+const profileMenu = document.getElementById("profileMenu");
+const logoutBtn = document.getElementById("logoutBtn");
 
 function saveLocationAndGoToMap() {
   const state = stateInput.value.trim();
@@ -30,6 +33,17 @@ locationForm.addEventListener('submit', function (event) {
   event.preventDefault();
   saveLocationAndGoToMap();
 });
+
+profileBtn.addEventListener("click", () => {
+  profileMenu.style.display =
+    profileMenu.style.display === "none" ? "block" : "none";
+});
+
+// Logout action
+logoutBtn.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
+
 
 document.getElementById('viewSafetyMapBtn').addEventListener('click', function () {
   saveLocationAndGoToMap();

@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Safe Nest - Dashboard</title>
+  <title>SafeNest - Dashboard</title>
   <link rel="stylesheet" href="css/dashboard.css" /></head>
 <body>
   <div class="container">
     <nav class="top-nav">
       <div class="logo">
         <span class="logo-mark">SN</span>
-        <span>Safe Nest</span>
+        <span>SafeNest</span>
       </div>
 
       <div class="nav-links">
@@ -21,8 +21,13 @@
       </div>
 
       <div class="nav-actions">
-        <button class="emergency-btn" type="button" onclick="window.location.href='tel:112'">Emergency</button>
-        <button class="profile" type="button" title="Profile">&#128100;</button>
+  <button class="emergency-btn" type="button" onclick="window.location.href='tel:112'">Emergency</button>
+  <button class="profile" type="button" title="Profile">&#128100;</button>
+  <div class="profile-menu" id="profileMenu">
+    <button id="logoutBtn">Logout</button>
+  </div>
+</div>
+
       </div>
     </nav>
 
