@@ -44,9 +44,20 @@ document.getElementById('emergencyContactsBtn').addEventListener('click', functi
 });
 
 document.getElementById('reportUnsafeBtn').addEventListener('click', function () {
-  const subject = encodeURIComponent('Unsafe area report - Safe Nest');
-  const body = encodeURIComponent('Location details:\nState: ' + stateInput.value.trim() + '\nCity: ' + cityInput.value.trim() + '\nArea: ' + areaInput.value.trim());
-  window.location.href = 'mailto:safenest@example.com?subject=' + subject + '&body=' + body;
+  const state = stateInput.value.trim();
+  const city = cityInput.value.trim();
+  const area = areaInput.value.trim();
+
+  if (state && city && area) {
+    localStorage.setItem('safeNestSelectedLocation', JSON.stringify({
+      state: state,
+      city: city,
+      area: area,
+      savedAt: new Date().toISOString()
+    }));
+  }
+
+  window.location.href = 'report.html';
 });
 
 document.getElementById('liveAlertsBtn').addEventListener('click', function () {

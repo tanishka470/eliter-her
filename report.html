@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safe Nest - Report Unsafe Area</title>
+  <link rel="stylesheet" href="css/report.css" />
+</head>
+<body>
+  <button class="emergency-btn" type="button" id="emergencyBtn">Emergency</button>
+
+  <header class="top-bar">
+    <div class="top-left">
+      <button class="back-btn" type="button" id="backBtn">Back</button>
+      <div class="location-chip" id="locationHint">Report an unsafe location</div>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+    <section class="report-card">
+      <h1>Report Unsafe Area</h1>
+      <p class="subtext">Share what happened so this location can be flagged for safer navigation.</p>
+
+      <form id="reportForm" class="report-form" novalidate>
+        <div class="grid-3">
+          <div class="field">
+            <label for="state">State</label>
+            <input id="state" type="text" placeholder="Enter state" />
+          </div>
+
+          <div class="field">
+            <label for="city">City</label>
+            <input id="city" type="text" placeholder="Enter city" />
+          </div>
+
+          <div class="field">
+            <label for="area">Area / Locality</label>
+            <input id="area" type="text" placeholder="Enter area" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="issueType">Type of issue</label>
+          <select id="issueType">
+            <option value="">Select issue type</option>
+            <option value="Poor lighting">Poor lighting</option>
+            <option value="Harassment">Harassment</option>
+            <option value="Unsafe environment">Unsafe environment</option>
+            <option value="Lack of police presence">Lack of police presence</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="description">Description</label>
+          <textarea id="description" rows="5" placeholder="Describe what happened, when, and any details that can help others stay safe."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="evidenceImage">Upload image (optional)</label>
+          <input id="evidenceImage" type="file" accept="image/*" />
+          <p class="field-note">Only image files are accepted. This is optional.</p>
+        </div>
+
+        <div class="actions">
+          <button class="submit-btn" type="submit">Submit Report</button>
+        </div>
+
+        <p class="form-message" id="formMessage"></p>
+      </form>
+    </section>
+
+    <section class="recent-card" aria-label="Recent reports">
+      <div class="recent-head">
+        <h2>Recent Reports</h2>
+        <button type="button" class="view-map-btn" id="viewMapBtn">View On Map</button>
+      </div>
+      <div id="reportList" class="report-list"></div>
+    </section>
+  </main>
+
+  <script src="js/report.js" defer></script>
+</body>
+</html>

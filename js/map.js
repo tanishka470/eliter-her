@@ -4,6 +4,8 @@ const scoreValue = document.getElementById('scoreValue');
 const scoreFill = document.getElementById('scoreFill');
 const scoreStars = document.getElementById('scoreStars');
 const scoreNote = document.getElementById('scoreNote');
+const reportCountBadge = document.getElementById('reportCount');
+const reportList = document.getElementById('reportList');
 
 const locationCoordinates = {
   'new delhi': [28.6139, 77.209],
@@ -152,6 +154,127 @@ function addZoneOverlays(map, center) {
   }).addTo(map).bindPopup('Safe Zone (Green)');
 }
 
+function getUnsafeReports() {
+  const raw = localStorage.getItem('safeNestUnsafeReports');
+  if (!raw) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function hashOffset(seedText, radius) {
+  let hash = 0;
+  for (let i = 0; i < seedText.length; i += 1) {
+    hash = (hash << 5) - hash + seedText.charCodeAt(i);
+    hash |= 0;
+  }
+
+  const normalized = Math.abs(hash % 1000) / 1000;
+  return (normalized * 2 - 1) * radius;
+}
+
+function reportMarkerPoint(center, report) {
+  const latOffset = hashOffset(report.id + report.area, 0.018);
+  const lngOffset = hashOffset(report.id + report.city, 0.018);
+  return [center[0] + latOffset, center[1] + lngOffset];
+}
+
+function getLocalCityReports(location) {
+  const reports = getUnsafeReports();
+  return reports.filter(function (report) {
+    const sameState = report.state && location.state && report.state.toLowerCase() === location.state.toLowerCase();
+    const sameCity = report.city && location.city && report.city.toLowerCase() === location.city.toLowerCase();
+    return sameState && sameCity;
+  });
+}
+
+function formatDateText(dateIso) {
+  if (!dateIso) {
+    return 'Unknown time';
+  }
+  return new Date(dateIso).toLocaleString();
+}
+
+function renderReportPanel(reports, markerIndex, map) {
+  reportCountBadge.textContent = String(reports.length);
+  reportList.innerHTML = '';
+
+  if (!reports.length) {
+    reportList.innerHTML = '<div class="report-empty">No local unsafe reports available for this location.</div>';
+    return;
+  }
+
+  const latest = reports.slice().sort(function (a, b) {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  }).slice(0, 8);
+
+  latest.forEach(function (report) {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'report-item';
+    item.innerHTML =
+      '<div class="report-item-head">' +
+      '<span class="report-issue">' + report.issueType + '</span>' +
+      '<span class="report-time">' + formatDateText(report.createdAt) + '</span>' +
+      '</div>' +
+      '<p class="report-place">' + report.area + ', ' + report.city + '</p>' +
+      '<p class="report-desc">' + report.description + '</p>';
+
+    item.addEventListener('click', function () {
+      const marker = markerIndex[report.id];
+      if (!marker) {
+        return;
+      }
+
+      const markerPoint = marker.getLatLng();
+      map.setView(markerPoint, 15, { animate: true });
+      marker.openPopup();
+    });
+
+    reportList.appendChild(item);
+  });
+}
+
+function addUnsafeReportMarkers(map, center, reports) {
+  const markerIndex = {};
+
+  if (!reports.length) {
+    return markerIndex;
+  }
+
+  reports.forEach(function (report) {
+    const point = reportMarkerPoint(center, report);
+    const reportedAt = new Date(report.createdAt).toLocaleString();
+    const imagePreview = report.imageDataUrl
+      ? '<div style="margin-top:8px;"><img src="' + report.imageDataUrl + '" alt="Report evidence" style="max-width:160px;border-radius:8px;border:1px solid #cbd5e1;" /></div>'
+      : '';
+
+    const marker = L.circleMarker(point, {
+      radius: 8,
+      color: '#991b1b',
+      fillColor: '#ef4444',
+      fillOpacity: 0.85,
+      weight: 2
+    }).addTo(map).bindPopup(
+      '<strong>Reported Issue:</strong> ' + report.issueType + '<br />' +
+      '<strong>Location:</strong> ' + report.area + ', ' + report.city + '<br />' +
+      '<strong>Details:</strong> ' + report.description + '<br />' +
+      '<strong>Time:</strong> ' + reportedAt +
+      imagePreview
+    );
+
+    markerIndex[report.id] = marker;
+  });
+
+  return markerIndex;
+}
+
 function getFocusMode() {
   const params = new URLSearchParams(window.location.search);
   return params.get('focus') || '';
@@ -184,6 +307,11 @@ function initPage() {
   L.marker(center).addTo(map).bindPopup('Selected Location: ' + location.area).openPopup();
   addZoneOverlays(map, center);
 
+  const localReports = getLocalCityReports(location);
+  const markerIndex = addUnsafeReportMarkers(map, center, localReports);
+  renderReportPanel(localReports, markerIndex, map);
+  const reportCount = localReports.length;
+
   const indicators = generateSafetyData(location);
   renderIndicators(indicators);
 
@@ -196,7 +324,13 @@ function initPage() {
   if (focusMode === 'women-friendly') {
     scoreNote.textContent = 'Focused on women-friendly places near your selected area.';
   } else if (focusMode === 'alerts') {
-    scoreNote.textContent = 'Showing location context for live alerts and safety monitoring.';
+    if (reportCount > 0) {
+      scoreNote.textContent = 'Showing live safety alerts with ' + reportCount + ' reported issue(s) in your city.';
+    } else {
+      scoreNote.textContent = 'Showing location context for live alerts and safety monitoring.';
+    }
+  } else if (reportCount > 0) {
+    scoreNote.textContent = scoreRemark(score) + ' Also showing ' + reportCount + ' reported issue(s) for this city.';
   }
 }
 

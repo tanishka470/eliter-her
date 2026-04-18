@@ -20,6 +20,13 @@ This project is built using plain HTML, CSS, and JavaScript, with Leaflet for ma
   - Zone overlays
   - Safety indicator breakdown
   - Score and rating system
+  - Optional unsafe-report markers from local reports
+- Report Unsafe Area page with:
+  - Auto-filled location (editable manually)
+  - Issue-type selection
+  - Description input
+  - Optional image upload
+  - Local report storage in browser
 - Women-Friendly Places page with:
   - Category filters
   - Search
@@ -33,6 +40,7 @@ This project is built using plain HTML, CSS, and JavaScript, with Leaflet for ma
 3. User enters location and checks safety
 4. User can open:
    - Safety Map
+  - Report Unsafe Area
    - Women-Friendly Places
    - Emergency and report actions
 
@@ -50,17 +58,20 @@ This project is built using plain HTML, CSS, and JavaScript, with Leaflet for ma
 |-- index.html
 |-- dashboard.html
 |-- map.html
+|-- report.html
 |-- places.html
 |-- README.md
 |-- css/
 |   |-- index.css
 |   |-- dashboard.css
 |   |-- map.css
+|   |-- report.css
 |   |-- places.css
 |-- js/
 |   |-- index.js
 |   |-- dashboard.js
 |   |-- map.js
+|   |-- report.js
 |   |-- places.js
 
 ## How To Run
@@ -80,6 +91,7 @@ The app stores selected data in localStorage, including:
 - Current logged-in user information
 - Selected location details
 - Place reviews and ratings
+- Unsafe area reports (with optional image data URL)
 
 If needed, clear browser localStorage to reset app data.
 
