@@ -1,18 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 :root {
-  --bg: #f3f7fb;
+  --bg: #f6fbff;
   --surface: #ffffff;
+  --surface-soft: rgba(255, 255, 255, 0.9);
   --text: #0f172a;
-  --muted: #64748b;
+  --muted: #5b6b82;
   --primary: #0f766e;
   --primary-strong: #0b5f59;
-  --secondary: #0ea5a2;
-  --border: #d9e3ec;
+  --secondary: #14b8a6;
+  --border: #d5e3f1;
   --danger: #dc2626;
   --warn: #f59e0b;
   --safe: #16a34a;
-  --shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
+  --shadow: 0 22px 44px rgba(15, 23, 42, 0.13);
 }
 
 * {
@@ -22,14 +23,30 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   min-height: 100vh;
   color: var(--text);
   background:
-    radial-gradient(circle at 10% 12%, rgba(14, 165, 162, 0.16), transparent 35%),
-    radial-gradient(circle at 92% 82%, rgba(245, 158, 11, 0.14), transparent 28%),
+    radial-gradient(circle at 10% 12%, rgba(20, 184, 166, 0.22), transparent 30%),
+    radial-gradient(circle at 92% 82%, rgba(239, 71, 111, 0.18), transparent 28%),
+    linear-gradient(140deg, #f6fbff 0%, #eef6ff 100%),
     var(--bg);
-  padding: 18px 16px 20px;
+  padding: 16px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.top-bar {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.top-bar {
+  font-family: 'Roboto Slab', serif;
 }
 
 .top-bar {
@@ -39,12 +56,12 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 14px;
+  background: var(--surface-soft);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(213, 227, 241, 0.95);
+  border-radius: 18px;
   box-shadow: var(--shadow);
-  padding: 12px;
+  padding: 14px;
   position: sticky;
   top: 10px;
   z-index: 1000;
@@ -59,19 +76,19 @@ body {
 }
 
 .back-btn {
-  border: 1px solid var(--border);
-  background: #fff;
+  border: 1px solid #ccd9e9;
+  background: #f8fbff;
   color: #334155;
-  border-radius: 10px;
-  padding: 9px 12px;
+  border-radius: 12px;
+  padding: 10px 13px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
 }
 
 .location-chip {
-  background: #e9fbf8;
+  background: linear-gradient(135deg, #dff8f5, #e0f2fe);
   color: var(--primary-strong);
   border: 1px solid rgba(15, 118, 110, 0.2);
   border-radius: 999px;
@@ -90,11 +107,12 @@ body {
   border: none;
   background: linear-gradient(120deg, #ef4444, #dc2626);
   color: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.2px;
-  padding: 10px 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 10px 15px;
   cursor: pointer;
   box-shadow: 0 12px 25px rgba(220, 38, 38, 0.3);
   z-index: 1200;
@@ -105,21 +123,21 @@ body {
   margin: 16px auto 0;
   display: grid;
   grid-template-columns: 1.6fr 1fr;
-  gap: 14px;
+  gap: 16px;
   animation: riseUp 0.45s ease;
 }
 
 .map-card,
 .panel-card {
-  background: var(--surface);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff, #f8fbff);
+  border: 1px solid rgba(213, 227, 241, 0.95);
+  border-radius: 18px;
   box-shadow: var(--shadow);
   overflow: hidden;
 }
 
 .map-head {
-  padding: 12px 14px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -129,7 +147,7 @@ body {
 }
 
 .map-title {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--primary-strong);
 }
@@ -138,14 +156,14 @@ body {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .dot {
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   display: inline-block;
   margin-right: 4px;
@@ -153,18 +171,18 @@ body {
 
 #map {
   width: 100%;
-  height: 72vh;
-  min-height: 460px;
+  height: 70vh;
+  min-height: 430px;
 }
 
 .panel-content {
-  padding: 14px;
+  padding: 16px;
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 .panel-title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--primary-strong);
 }
@@ -175,14 +193,14 @@ body {
 }
 
 .indicator-item {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px;
+  border: 1px solid #d2dfed;
+  border-radius: 13px;
+  padding: 11px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  background: #f9fcfd;
+  background: #f7fbff;
 }
 
 .indicator-item span:first-child {
@@ -215,9 +233,9 @@ body {
 
 .score-box {
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px;
-  background: linear-gradient(145deg, #f0fdfb, #ffffff);
+  border-radius: 16px;
+  padding: 14px;
+  background: linear-gradient(145deg, #edfdfa, #ffffff);
   display: grid;
   gap: 8px;
 }
@@ -236,7 +254,7 @@ body {
 }
 
 .score-value {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--primary-strong);
 }
@@ -271,8 +289,8 @@ body {
 
 .report-box {
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px;
+  border-radius: 16px;
+  padding: 14px;
   background: #ffffff;
   display: grid;
   gap: 10px;
@@ -285,7 +303,7 @@ body {
 }
 
 .report-head h3 {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text);
 }
@@ -309,10 +327,10 @@ body {
 }
 
 .report-item {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 8px;
-  background: #fafcfe;
+  border: 1px solid #d5e3f1;
+  border-radius: 12px;
+  padding: 10px;
+  background: #f7fbff;
   width: 100%;
   text-align: left;
   cursor: pointer;
@@ -367,7 +385,7 @@ body {
 
 .report-empty {
   border: 1px dashed var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 10px;
   font-size: 12px;
   color: var(--muted);
@@ -375,6 +393,10 @@ body {
 }
 
 @media (max-width: 980px) {
+  body {
+    padding: 10px;
+  }
+
   .main-layout {
     grid-template-columns: 1fr;
   }
@@ -392,6 +414,7 @@ body {
 
 @media (max-width: 620px) {
   .top-bar {
+    border-radius: 14px;
     padding-right: 66px;
   }
 

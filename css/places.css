@@ -1,18 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 :root {
-  --bg: #f3f7fb;
+  --bg: #f6fbff;
   --surface: #ffffff;
+  --surface-soft: rgba(255, 255, 255, 0.9);
   --text: #0f172a;
-  --muted: #64748b;
+  --muted: #5b6b82;
   --primary: #0f766e;
   --primary-strong: #0b5f59;
-  --secondary: #0ea5a2;
-  --border: #d9e3ec;
+  --secondary: #14b8a6;
+  --border: #d5e3f1;
   --danger: #dc2626;
   --success: #16a34a;
   --warn: #f59e0b;
-  --shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
+  --shadow: 0 22px 44px rgba(15, 23, 42, 0.13);
 }
 
 * {
@@ -22,14 +23,30 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Work Sans', sans-serif;
   min-height: 100vh;
   color: var(--text);
   background:
-    radial-gradient(circle at 10% 12%, rgba(14, 165, 162, 0.16), transparent 35%),
-    radial-gradient(circle at 92% 82%, rgba(245, 158, 11, 0.14), transparent 28%),
+    radial-gradient(circle at 10% 12%, rgba(20, 184, 166, 0.22), transparent 30%),
+    radial-gradient(circle at 92% 82%, rgba(239, 71, 111, 0.18), transparent 28%),
+    linear-gradient(140deg, #f6fbff 0%, #eef6ff 100%),
     var(--bg);
-  padding: 18px 16px 20px;
+  padding: 16px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.top-bar {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.top-bar {
+  font-family: 'Roboto Slab', serif;
 }
 
 .top-bar {
@@ -39,12 +56,12 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--surface-soft);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 14px;
+  border: 1px solid rgba(213, 227, 241, 0.95);
+  border-radius: 18px;
   box-shadow: var(--shadow);
-  padding: 12px;
+  padding: 14px;
   position: sticky;
   top: 10px;
   z-index: 1000;
@@ -183,9 +200,9 @@ body {
 }
 
 .place-card {
-  background: var(--surface);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 14px;
+  background: linear-gradient(145deg, #ffffff, #f7fbff);
+  border: 1px solid rgba(213, 227, 241, 0.95);
+  border-radius: 18px;
   box-shadow: var(--shadow);
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;

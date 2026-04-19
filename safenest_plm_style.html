@@ -1,0 +1,818 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;600;700;800&family=Ubuntu:wght@400;500;700&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+  :root {
+    --ink-900: #111827;
+    --ink-700: #334155;
+    --ink-500: #64748b;
+    --paper: #fffdf8;
+    --surface: #ffffff;
+    --line: #dbe4f0;
+    --rose: #e8315a;
+    --rose-dark: #c82348;
+    --teal: #0f766e;
+    --amber: #fbbf24;
+    --sky: #38bdf8;
+    --shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background:
+      radial-gradient(circle at 4% 12%, rgba(232, 49, 90, 0.13), transparent 26%),
+      radial-gradient(circle at 94% 86%, rgba(15, 118, 110, 0.18), transparent 28%),
+      linear-gradient(145deg, #f7fbff 0%, #fff5f7 100%);
+    color: var(--ink-900);
+    padding: 24px;
+  }
+
+  .w {
+    font-family: 'Work Sans', sans-serif;
+    max-width: 1240px;
+    margin: 0 auto;
+    background: var(--surface);
+    color: var(--ink-900);
+    border-radius: 26px;
+    overflow: hidden;
+    border: 1px solid rgba(219, 228, 240, 0.85);
+    box-shadow: var(--shadow);
+    animation: rise 0.65s ease;
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes tick {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 42px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.98), rgba(249, 252, 255, 0.95));
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(8px);
+  }
+
+  .logo {
+    font-family: 'Roboto Slab', serif;
+    font-size: 31px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--ink-900);
+  }
+
+  .logo span {
+    color: var(--rose);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 26px;
+  }
+
+  .nav-links a {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--ink-700);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+    color: #fff;
+    border: none;
+    padding: 11px 22px;
+    border-radius: 999px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 10px 20px rgba(232, 49, 90, 0.28);
+  }
+
+  .ticker {
+    background: var(--ink-900);
+    color: #f8fafc;
+    padding: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.1px;
+    text-transform: uppercase;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: tick 20s linear infinite;
+  }
+
+  .hero {
+    position: relative;
+    padding: 70px 42px 48px;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    background:
+      linear-gradient(135deg, rgba(248, 252, 255, 0.8), rgba(255, 249, 252, 0.9));
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(17, 24, 39, 0.06) 0, rgba(17, 24, 39, 0.06) 1px, transparent 1px, transparent 48px),
+      repeating-linear-gradient(90deg, rgba(17, 24, 39, 0.06) 0, rgba(17, 24, 39, 0.06) 1px, transparent 1px, transparent 48px);
+    opacity: 0.25;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid #c9d6e4;
+    background: rgba(255, 255, 255, 0.86);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 26px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-tag .live {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.18);
+  }
+
+  .hero-h {
+    font-family: 'Roboto Slab', serif;
+    font-size: clamp(40px, 7vw, 78px);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -2.6px;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 34px;
+    max-width: 840px;
+  }
+
+  .hero-h .hl-pink {
+    background: linear-gradient(180deg, rgba(255, 180, 203, 0.64), rgba(255, 151, 184, 0.66));
+    padding: 0 10px;
+    border-radius: 6px;
+  }
+
+  .hero-h .hl-yellow {
+    background: linear-gradient(180deg, rgba(253, 230, 138, 0.72), rgba(252, 211, 77, 0.68));
+    padding: 0 10px;
+    border-radius: 6px;
+  }
+
+  .hero-h .hl-blue {
+    background: linear-gradient(180deg, rgba(186, 230, 253, 0.72), rgba(125, 211, 252, 0.68));
+    padding: 0 10px;
+    border-radius: 6px;
+  }
+
+  .hero-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+    gap: 34px;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--ink-700);
+    max-width: 430px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .btn-fill,
+  .btn-out,
+  .sos-btn {
+    font-family: 'Ubuntu', sans-serif;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .btn-fill:hover,
+  .btn-out:hover,
+  .sos-btn:hover,
+  .nav-cta:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-fill {
+    background: linear-gradient(130deg, var(--ink-900), #1f2937);
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 12px 20px rgba(17, 24, 39, 0.2);
+  }
+
+  .btn-out {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ink-900);
+    border: 1px solid #b9c8d8;
+    padding: 13px 28px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.98), rgba(244, 250, 255, 0.85));
+  }
+
+  .stat {
+    padding: 30px 32px;
+    border-right: 1px solid var(--line);
+  }
+
+  .stat:last-child {
+    border-right: none;
+  }
+
+  .stat-num {
+    font-family: 'Roboto Slab', serif;
+    font-size: 37px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--ink-900);
+  }
+
+  .stat-label {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 11px;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-top: 3px;
+  }
+
+  .feat {
+    padding: 60px 42px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .feat-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 36px;
+  }
+
+  .feat-tag {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--rose);
+    border: 1px solid rgba(232, 49, 90, 0.35);
+    background: rgba(232, 49, 90, 0.08);
+    padding: 5px 12px;
+    border-radius: 999px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .feat-h {
+    font-family: 'Roboto Slab', serif;
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -1.2px;
+    line-height: 1.06;
+  }
+
+  .feat-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .fc {
+    padding: 26px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    min-height: 220px;
+    box-shadow: 0 10px 18px rgba(15, 23, 42, 0.05);
+  }
+
+  .fc-num {
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'Ubuntu', sans-serif;
+    color: #94a3b8;
+    letter-spacing: 1px;
+    margin-bottom: 42px;
+  }
+
+  .fc-icon {
+    font-size: 29px;
+    margin-bottom: 12px;
+  }
+
+  .fc-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+
+  .fc-desc {
+    font-size: 14px;
+    color: var(--ink-700);
+    line-height: 1.64;
+  }
+
+  .fc-accent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+  }
+
+  .sos {
+    margin: 0;
+    background:
+      radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.19), transparent 20%),
+      linear-gradient(135deg, #e8315a, #cc274c);
+    padding: 60px 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .sos-left .pretag {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffd2de;
+    margin-bottom: 12px;
+  }
+
+  .sos-left h2 {
+    font-family: 'Roboto Slab', serif;
+    font-size: clamp(34px, 4.6vw, 50px);
+    font-weight: 700;
+    letter-spacing: -1.3px;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+
+  .sos-left p {
+    font-size: 15px;
+    color: #ffe8ef;
+    line-height: 1.7;
+    max-width: 420px;
+  }
+
+  .sos-btn {
+    background: #fff;
+    color: var(--rose);
+    border: none;
+    padding: 18px 36px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    box-shadow: 0 12px 24px rgba(17, 24, 39, 0.2);
+  }
+
+  .community {
+    padding: 60px 42px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, #fffdfd 0%, #f8fbff 100%);
+  }
+
+  .comm-top {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .comm-top h2 {
+    font-family: 'Roboto Slab', serif;
+    font-size: clamp(30px, 3.8vw, 42px);
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+
+  .comm-top p {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    color: var(--ink-500);
+    margin-top: 10px;
+  }
+
+  .comm-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .cc {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 26px;
+    background: #fff;
+    box-shadow: 0 10px 18px rgba(15, 23, 42, 0.05);
+  }
+
+  .cc-icon-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .cc-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .cc-name {
+    font-family: 'Roboto Slab', serif;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .cc-city {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 11px;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .cc-text {
+    font-size: 14px;
+    color: var(--ink-700);
+    line-height: 1.67;
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 42px;
+    border-top: 1px solid var(--line);
+    background: #fff;
+  }
+
+  .footer span {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 11px;
+    color: var(--ink-500);
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-links a {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 11px;
+    color: var(--ink-500);
+    text-decoration: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 1080px) {
+    .nav {
+      padding: 16px 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero,
+    .feat,
+    .sos,
+    .community,
+    .footer {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat:nth-child(2) {
+      border-right: none;
+    }
+
+    .stat:nth-child(-n+2) {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .feat-cards,
+    .comm-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 760px) {
+    body {
+      padding: 10px;
+    }
+
+    .w {
+      border-radius: 16px;
+    }
+
+    .nav-links {
+      width: 100%;
+      order: 3;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      gap: 18px;
+    }
+
+    .hero {
+      padding-top: 46px;
+      padding-bottom: 38px;
+    }
+
+    .hero-bottom,
+    .sos,
+    .footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero-btns {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn-fill,
+    .btn-out,
+    .sos-btn {
+      width: 100%;
+    }
+
+    .stats,
+    .feat-cards,
+    .comm-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .stat,
+    .stat:nth-child(2),
+    .stat:nth-child(3) {
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .stat:last-child {
+      border-bottom: none;
+    }
+  }
+</style>
+
+<div class="w">
+
+  <nav class="nav">
+    <div class="logo">safe<span>nest</span>.</div>
+    <div class="nav-links">
+      <a>Home</a>
+      <a>Safety Map</a>
+      <a>Emergency</a>
+      <a>Community</a>
+      <a>Resources</a>
+    </div>
+    <button class="nav-cta">🚨 SOS Alert</button>
+  </nav>
+
+  <div class="ticker">
+    <span class="ticker-inner">
+      &nbsp;&nbsp;WOMEN'S SAFETY &nbsp;·&nbsp; REAL-TIME ALERTS &nbsp;·&nbsp; VERIFIED SAFE ZONES &nbsp;·&nbsp; EMERGENCY CONTACTS &nbsp;·&nbsp; COMMUNITY REPORTS &nbsp;·&nbsp; LIVE SAFETY MAP &nbsp;·&nbsp; WOMEN'S SAFETY &nbsp;·&nbsp; REAL-TIME ALERTS &nbsp;·&nbsp; VERIFIED SAFE ZONES &nbsp;·&nbsp; EMERGENCY CONTACTS &nbsp;·&nbsp; COMMUNITY REPORTS &nbsp;·&nbsp; LIVE SAFETY MAP &nbsp;·&nbsp;
+    </span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-tag"><span class="live"></span> Live safety data active</div>
+    <div class="hero-h">
+      Your safety,<br>
+      <span class="hl-pink">every street,</span><br>
+      <span class="hl-yellow">every moment.</span>
+    </div>
+    <div class="hero-bottom">
+      <p class="hero-desc">SafeNest gives women real-time safety intelligence — know before you go. Live alerts, verified safe spots, and one-tap emergency access.</p>
+      <div class="hero-btns">
+        <button class="btn-fill">Check My Area →</button>
+        <button class="btn-out">View Safety Map</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">12,400+</div>
+      <div class="stat-label">Women protected</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">340+</div>
+      <div class="stat-label">Cities covered</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">8,200+</div>
+      <div class="stat-label">Safe zones mapped</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Alert accuracy</div>
+    </div>
+  </div>
+
+  <section class="feat">
+    <div class="feat-header">
+      <div>
+        <div class="feat-tag">Features</div>
+        <div class="feat-h">Everything you need<br>to stay protected.</div>
+      </div>
+    </div>
+    <div class="feat-cards">
+      <div class="fc">
+        <div class="fc-num">01</div>
+        <div class="fc-icon">🗺️</div>
+        <div class="fc-title">Live Safety Map</div>
+        <div class="fc-desc">Real-time colour-coded safety scores for every neighbourhood around you.</div>
+        <div class="fc-accent" style="background:#bfdbfe"></div>
+      </div>
+      <div class="fc">
+        <div class="fc-num">02</div>
+        <div class="fc-icon">📍</div>
+        <div class="fc-title">Women-Friendly Places</div>
+        <div class="fc-desc">Verified safe cafes, hospitals, shelters, and police stations near you.</div>
+        <div class="fc-accent" style="background:#ffd6e0"></div>
+      </div>
+      <div class="fc">
+        <div class="fc-num">03</div>
+        <div class="fc-icon">🔔</div>
+        <div class="fc-title">Live Alerts</div>
+        <div class="fc-desc">Instant community-powered alerts for your current area — updated every minute.</div>
+        <div class="fc-accent" style="background:#fff176"></div>
+      </div>
+      <div class="fc">
+        <div class="fc-num">04</div>
+        <div class="fc-icon">🚨</div>
+        <div class="fc-title">Emergency Contacts</div>
+        <div class="fc-desc">One tap to reach police, ambulance, and your personal emergency circle.</div>
+        <div class="fc-accent" style="background:#fca5a5"></div>
+      </div>
+      <div class="fc">
+        <div class="fc-num">05</div>
+        <div class="fc-icon">⚠️</div>
+        <div class="fc-title">Report Unsafe Area</div>
+        <div class="fc-desc">Anonymously flag unsafe areas and help protect other women in your community.</div>
+        <div class="fc-accent" style="background:#bbf7d0"></div>
+      </div>
+      <div class="fc">
+        <div class="fc-num">06</div>
+        <div class="fc-icon">🛡️</div>
+        <div class="fc-title">Safety Check</div>
+        <div class="fc-desc">Enter any state, city, or locality and get an instant risk analysis report.</div>
+        <div class="fc-accent" style="background:#ddd6fe"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sos">
+    <div class="sos-left">
+      <div class="pretag">Emergency</div>
+      <h2>In danger<br>right now?</h2>
+      <p>Tap SOS to instantly alert your emergency contacts, share your live location, and notify nearby services.</p>
+    </div>
+    <button class="sos-btn">🚨 Trigger SOS Now</button>
+  </section>
+
+  <section class="community">
+    <div class="comm-top">
+      <h2>Trusted by women across India.</h2>
+      <p>Real stories from our community.</p>
+    </div>
+    <div class="comm-cards">
+      <div class="cc">
+        <div class="cc-icon-row">
+          <div class="cc-avatar" style="background:#e8315a">P</div>
+          <div><div class="cc-name">Priya S.</div><div class="cc-city">Delhi, India</div></div>
+        </div>
+        <div class="cc-text">"The live alerts feature warned me about an unsafe route at night. I took a detour and felt so much safer. This app is a lifesaver."</div>
+      </div>
+      <div class="cc">
+        <div class="cc-icon-row">
+          <div class="cc-avatar" style="background:#7c3aed">A</div>
+          <div><div class="cc-name">Ayesha K.</div><div class="cc-city">Mumbai, India</div></div>
+        </div>
+        <div class="cc-text">"Found a verified women-friendly hospital nearby during an emergency. The app made it so easy to get help fast. Cannot recommend it enough."</div>
+      </div>
+      <div class="cc">
+        <div class="cc-icon-row">
+          <div class="cc-avatar" style="background:#059669">R</div>
+          <div><div class="cc-name">Riya M.</div><div class="cc-city">Bangalore, India</div></div>
+        </div>
+        <div class="cc-text">"I report unsafe areas regularly now. Knowing my reports help other women in my neighbourhood stay safe makes it feel so worthwhile."</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span>© 2025 SafeNest — Built for women's safety</span>
+    <div class="footer-links">
+      <a>Privacy</a>
+      <a>Terms</a>
+      <a>Contact</a>
+      <a>About</a>
+    </div>
+  </div>
+
+</div>

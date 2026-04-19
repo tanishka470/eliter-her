@@ -1,13 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
 :root {
-  --bg: #f4f8fb;
+  --bg: #f6fbff;
   --surface: #ffffff;
+  --surface-soft: rgba(255, 255, 255, 0.9);
   --text: #0f172a;
-  --muted: #64748b;
+  --muted: #5b6b82;
   --primary: #0f766e;
   --primary-strong: #0b5f59;
-  --border: #d9e3ec;
+  --border: #d5e3f1;
   --danger: #dc2626;
-  --shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
+  --shadow: 0 22px 44px rgba(15, 23, 42, 0.13);
 }
 
 * {
@@ -16,9 +19,29 @@
 
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Work Sans', sans-serif;
   color: var(--text);
-  background: radial-gradient(circle at top right, #e2f5f4, transparent 32%), var(--bg);
+  background:
+    radial-gradient(circle at top right, rgba(20, 184, 166, 0.2), transparent 32%),
+    radial-gradient(circle at 8% 86%, rgba(239, 71, 111, 0.16), transparent 30%),
+    linear-gradient(145deg, #f6fbff 0%, #eef6ff 100%),
+    var(--bg);
+  padding: 16px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.top-bar {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.top-bar {
+  font-family: 'Roboto Slab', serif;
 }
 
 .emergency-btn {
@@ -32,14 +55,18 @@ body {
   font-weight: 700;
   padding: 10px 16px;
   cursor: pointer;
-  box-shadow: var(--shadow);
+  box-shadow: 0 12px 26px rgba(220, 38, 38, 0.3);
   z-index: 10;
 }
 
 .top-bar {
   max-width: 1140px;
-  margin: 26px auto 0;
-  padding: 0 20px;
+  margin: 0 auto;
+  padding: 14px;
+  background: var(--surface-soft);
+  border: 1px solid rgba(213, 227, 241, 0.95);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
 }
 
 .top-left {
@@ -69,25 +96,25 @@ body {
 
 .page-wrap {
   max-width: 1140px;
-  margin: 18px auto 40px;
-  padding: 0 20px;
+  margin: 14px auto 20px;
+  padding: 0;
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: 20px;
+  gap: 16px;
 }
 
 .report-card,
 .recent-card {
-  background: var(--surface);
+  background: linear-gradient(145deg, #ffffff, #f8fbff);
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 20px;
   box-shadow: var(--shadow);
-  padding: 22px;
+  padding: 24px;
 }
 
 .report-card h1 {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 2rem;
 }
 
 .subtext {
